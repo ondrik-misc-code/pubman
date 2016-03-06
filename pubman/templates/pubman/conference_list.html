@@ -1,0 +1,38 @@
+ <!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>PubMan Conference List</title>
+</head>
+
+<body>
+  <h1>PubMan &mdash; Conference List</h1>
+  <ul>
+  <li><a href="{% url 'pubman:index' %}">Index</a></li>
+  </ul>
+  <ul>
+  <li><a href="{% url 'pubman:conference_new' %}">Add</a></li>
+  </ul>
+  {% if conference_list %}
+  <table>
+    <tr>
+    <th>Last name</th>
+    <th>First name</th>
+    <th></th>
+    </tr>
+    {% for conference in conference_list %}
+    <tr>
+      <td>{{ conference.conf_series.abbr }}</td>
+      <td>{{ conference.year }}</td>
+      <td><a href="{% url 'pubman:conference_edit' conference.id %}">Edit</a></td>
+      <td><a href="{% url 'pubman:conference_delete' conference.id %}">Delete</a></td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% else %}
+    <p>No conferences!</p>
+  {% endif %}
+</body>
+</html>
+
+
