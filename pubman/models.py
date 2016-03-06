@@ -17,11 +17,25 @@ class Author(models.Model):
 class Publisher(models.Model):
     name = models.CharField(max_length=128)
 
+    def __str__(self):
+        '''
+        Conversion to a string.
+        '''
+        return self.name
+
 
 ###############################################################################
 class ProceedingsSeries(models.Model):
     name = models.CharField(max_length=256)
     abbr = models.CharField(max_length=128, null=True)
+    # published by some publisher
+    published_by = models.ForeignKey(Publisher, on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        '''
+        Conversion to a string.
+        '''
+        return self.name + "---" + self.abbr
 
 
 ###############################################################################
@@ -50,6 +64,12 @@ class Conference(models.Model):
     published_in = models.ForeignKey(ProceedingsSeries, on_delete=models.SET_NULL, null=True)
     # the volume of a notes series proceedings were published in
     published_in_vol = models.IntegerField(null=True)
+
+    def __str__(self):
+        '''
+        Conversion to a string.
+        '''
+        return self.conf_series.abbr + "'" + self.year.__str__()
 
 
 ###############################################################################
